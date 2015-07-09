@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title></title>
 </head>
+
 <body>
     <h1>Hello!</h1>
 
@@ -24,13 +25,21 @@
 
         socket.on('change html', function(){
             $('#setNewName').remove();
+            $(".body").add("<h1>nizej</h1>" ).appendTo( document.body );
             $(".body").add( messageForm() ).appendTo( document.body );
         });
 
+        $('#message').submit(function(){
+            console.log('ello');
+//            socket.emit('chat message', $('#writeMessage').value());
+//            $('#writeMessage').val('');
+            return false;
+        });
+
         function messageForm(){
-            var html =  '<form id="message" action="">';
-            html +=  '<input id="typeMessage" autocomplete="off" /><button>Send</button>';
-            html +=  '</form>';
+            var html =  '<form id="message" action="">' +
+                    '<input id="writeMessage" autocomplete="off" />' +
+                    '<button>Send</button></form>';
             return html;
         }
     </script>
