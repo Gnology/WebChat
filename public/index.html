@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <h1>Hello!</h1>
+
+    <form id="setNewName" action="">
+        <input id="setName" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var socket = io();
+
+        $('#setNewName').submit(function(){
+            socket.emit('set name', $('#setName').val());
+            $('#setName').val('');
+            return false;
+        });
+
+        socket.on('change html', function(){
+            $('#setNewName').remove();
+            $(".body").add( messageForm() ).appendTo( document.body );
+        });
+
+        function messageForm(){
+            var html =  '<form id="message" action="">';
+            html +=  '<input id="typeMessage" autocomplete="off" /><button>Send</button>';
+            html +=  '</form>';
+            return html;
+        }
+    </script>
+
+</body>
+</html>
