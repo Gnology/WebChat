@@ -6,8 +6,6 @@
 </head>
 
 <body>
-    <h1>Hello!</h1>
-
     <form id="setNewName" action="">
         <input id="setName" autocomplete="off" /><button>Send</button>
     </form>
@@ -19,28 +17,25 @@
 
         $('#setNewName').submit(function(){
             socket.emit('set name', $('#setName').val());
-            $('#setName').val('');
-            return false;
-        });
-
-        socket.on('change html', function(){
             $('#setNewName').remove();
-            $(".body").add("<h1>nizej</h1>" ).appendTo( document.body );
-            $(".body").add( messageForm() ).appendTo( document.body );
-        });
 
-        $('#message').submit(function(){
-            console.log('ello');
-//            socket.emit('chat message', $('#writeMessage').value());
-//            $('#writeMessage').val('');
+            $(".body").add(messageForm()).appendTo( document.body );
+            sendMessage();
             return false;
         });
+
+        function sendMessage() {
+            $('#sendMessage').submit(function () {
+                socket.emit('chat message', $('#message').val());
+                $('#message').val('');
+                return false;
+            });
+        }
 
         function messageForm(){
-            var html =  '<form id="message" action="">' +
-                    '<input id="writeMessage" autocomplete="off" />' +
-                    '<button>Send</button></form>';
-            return html;
+            return html = '<form id="sendMessage" action="">'
+                    + '<input id="message" autocomplete="off" /><button>Wyslij</button>'
+                    + '</form>';
         }
     </script>
 
