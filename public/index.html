@@ -17,13 +17,18 @@
 
         $('#setNewName').submit(function(){
             socket.emit('set name', $('#setName').val());
-            $('#setNewName').remove();
-
-            $(".body").add(messageForm()).appendTo( document.body );
-            sendMessage();
             return false;
         });
 
+        socket.on('inform user', function(msg){
+            alert(msg.info);
+        });
+
+        socket.on('change html', function(){
+            $('#setNewName').remove();
+            $(".body").add(messageForm()).appendTo( document.body );
+            sendMessage();
+        });
         function sendMessage() {
             $('#sendMessage').submit(function () {
                 socket.emit('chat message', $('#message').val());
