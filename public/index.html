@@ -10,6 +10,9 @@
         <input id="setName" autocomplete="off" /><button>Send</button>
     </form>
 
+    <div id="messages">
+
+    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
@@ -20,15 +23,10 @@
             return false;
         });
 
-        socket.on('inform user', function(msg){
-           alert(msg.info);
-        });
-
-        socket.on('change html', function(){
-            $('#setNewName').remove();
-            $(".body").add(messageForm()).appendTo( document.body );
-            sendMessage();
-        });
+        informUser(socket);
+        changeHtml(socket);
+        showMessage(socket);
+        updateUsersList(socket);
         function sendMessage() {
             $('#sendMessage').submit(function () {
                 socket.emit('chat message', $('#message').val());
@@ -40,7 +38,42 @@
         function messageForm(){
             return html = '<form id="sendMessage" action="">'
                     + '<input id="message" autocomplete="off" /><button>Wyslij</button>'
-                    + '</form>';
+                    + '</form>'
+                    + '<table id="usersList">'
+                    + '</table>';
+        }
+
+        function changeHtml(socket){
+            socket.on('change html', function(){
+                $('#setNewName').remove();
+                $(".body").add(messageForm()).appendTo( document.body );
+                sendMessage();
+            });
+        }
+
+        function updateUsersList(socket){
+            socket.on('update list', function(namesUsed){
+                $('#tr').remove();
+                var html = '<tr id="tr">';
+                for(var i in namesUsed) {
+                    if (namesUsed[i].substring(0, 5) != "Guest" && namesUsed[i] != null){
+                    html += '<td>' + namesUsed[i] + '</td>';}
+                }
+                html += '</tr>';
+                $( "#usersList" ).append( html );
+            });
+        }
+
+        function informUser(socket){
+            socket.on('inform user', function(msg){
+                alert(msg.info);
+            });
+        }
+
+        function showMessage(socket){
+            socket.on('show message', function(msg){
+                $('#messages').append($('<p>').text(msg))
+            });
         }
     </script>
 
