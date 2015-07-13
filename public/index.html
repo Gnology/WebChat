@@ -13,7 +13,6 @@
     <form id="setNewName" action="">
         <input id="setName" autocomplete="off" />
     </form>
-
     <div id="messages">
 
     </div>
@@ -41,15 +40,16 @@
 
         function messageForm(){
             return html = '<form id="sendMessage" action="">'
-                    + '<input id="message" autocomplete="off" /><button>Wyslij</button>'
+                    + '<input id="message" autocomplete="off" /><button id="button">Wyslij</button>'
                     + '</form>'
-                    + '<ul id="usersList">'
-                    + '</ul>';
+                    + '<div id="righty"><ul id="usersList">'
+                    + '</ul></div>';
         }
 
         function changeHtml(socket){
             socket.on('change html', function(){
                 $('#setNewName').remove();
+                $('#welcome').remove();
                 $(".body").add(messageForm()).appendTo( document.body );
                 sendMessage();
             });

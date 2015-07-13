@@ -31,3 +31,38 @@ body {
     text-align: center;
     color: #ffffff;
 }
+
+#sendMessage{
+    background: #004157;
+    padding: 4px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+}
+
+#message{
+    border: 0;
+    padding: 10px;
+    width: 90%;
+    margin-right: .5%;
+}
+
+
+
+#usersList{
+    background-color: #007dbd;
+    margin-left: 50%;
+    overflow: scroll;
+}
+
+#righty{
+    position: absolute;
+    margin-top: 74px;
+    margin-bottom: 45px;
+    background-color: #007dbc;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    right: 0;
+}
