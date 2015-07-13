@@ -16,6 +16,9 @@ var server = http.createServer(function(request, response) {
                 case '/':
                     filePath = 'public/index.html';
                 break;
+                default:
+                    filePath = 'public' + request.url;
+                    break;
             }
             break;
 
