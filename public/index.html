@@ -13,9 +13,7 @@
     <form id="setNewName" action="">
         <input id="setName" autocomplete="off" />
     </form>
-    <div id="messages">
 
-    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
@@ -39,11 +37,13 @@
         }
 
         function messageForm(){
-            return html = '<form id="sendMessage" action="">'
-                    + '<input id="message" autocomplete="off" /><button id="button">Wyslij</button>'
+            return html = '<div id="messages"></div>'
+                    + '<form id="sendMessage" action="">'
+                    + '<input id="message" autocomplete="off" /><button id="button">Send</button>'
                     + '</form>'
-                    + '<div id="righty"><ul id="usersList">'
+                    + '<div id="righty">Online users<ul id="usersList">'
                     + '</ul></div>';
+
         }
 
         function changeHtml(socket){
@@ -62,7 +62,8 @@
 
         function showMessage(socket){
             socket.on('show message', function(msg){
-                $('#messages').append($('<p>').text(msg))
+                $('#messages').append($('<p>').text(msg));
+                $('#messages').scrollTop($('#messages')[0].scrollHeight);
             });
         }
 
