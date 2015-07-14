@@ -4,6 +4,14 @@ var path = require('path');
 var mime = require('mime');
 var cache = {};
 var chatServer = require('./lib/chat_server.js');
+var mysql = require('mysql');
+
+var db = mysql.createConnection({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'password',
+    database: 'timetrack'
+});
 
 var server = http.createServer(function(request, response) {
     var filePath = false;
@@ -26,7 +34,7 @@ var server = http.createServer(function(request, response) {
     var absPath = './' + filePath;
     serveStatic(response, cache, absPath);
 });
-chatServer.listen(server);
+chatServer.listen(server, db);
 
 
 function send404(response) {
@@ -64,7 +72,18 @@ function serveStatic(response, cache, absPath) {
     }
 }
 
+db.query(
+    "CREATE TABLE IF NOT EXISTS chat ("
+    + "id INT(10) NOT NULL AUTO_INCREMENT, "
+    + "date DATETIME, "
+    + "name LONGTEXT,"
+    + "message LONGTEXT,"
+    + "PRIMARY KEY(id))",
+    function(err) {
+        if (err) throw err;
+        console.log('Server started...');
+        server.listen(80, '127.0.0.1');
+    }
+);
 
-server.listen(8000);
-
-console.log('Server running at localhost:8000/');
+console.log('Server running at localhost:80/');
